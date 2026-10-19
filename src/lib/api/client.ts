@@ -70,9 +70,9 @@ function createHttpApi(baseUrl: string): ApiClient {
     const token = tokenStore.get();
     const headers: Record<string, string> = { Accept: "application/json" };
     if (body !== undefined) headers["Content-Type"] = "application/json";
-    if (token) headers.Authorization = `Bearer ${token}`;
+    if (token) headers["Authorization"] = `Bearer ${token}`;
     if (method !== "GET") headers["Idempotency-Key"] = crypto.randomUUID();
-    const res = await fetch(url, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
+    const res = await fetch(url, { method, headers, body: body === undefined ? null : JSON.stringify(body) });
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       throw new ApiError(res.status, err.code ?? "http_error", err.message ?? res.statusText);
@@ -102,8 +102,8 @@ function createHttpApi(baseUrl: string): ApiClient {
   };
 }
 
-const mode = import.meta.env.VITE_API_MODE ?? "mock";
+const mode = import.meta.env["VITE_API_MODE"] ?? "mock";
 export const API_MODE: "mock" | "http" = mode === "http" ? "http" : "mock";
 
 export const api: ApiClient =
-  API_MODE === "http" ? createHttpApi(import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3000") : mockApi;
+  API_MODE === "http" ? createHttpApi(import.meta.env["VITE_API_BASE_URL"] ?? "http://localhost:3000") : mockApi;

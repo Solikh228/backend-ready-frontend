@@ -101,7 +101,7 @@ let subscriptions: Subscription[] = seeds.map((s) => {
     };
     transactions.push(tx);
     if (s.domain && s.id !== "sub_loom") {
-      evidence[s.id].push({
+      evidence[s.id]!.push({
         id: `ev_${s.id}_${i}`,
         receivedAt: daysAgo(ago + 0.2),
         senderDomain: s.domain,
@@ -116,7 +116,7 @@ let subscriptions: Subscription[] = seeds.map((s) => {
       });
     }
   });
-  const last = s.amounts[n - 1];
+  const last = s.amounts[n - 1] ?? 0;
   return {
     id: s.id,
     vendorName: s.name,

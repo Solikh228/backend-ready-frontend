@@ -165,8 +165,8 @@ export interface Paginated<T> {
 
 export interface ReviewInput {
   decision: UserReview["decision"];
-  note?: string;
-  estimatedSavings?: Money;
+  note?: string | undefined;
+  estimatedSavings?: Money | undefined;
 }
 
 export interface SubscriptionPatch {
@@ -174,7 +174,7 @@ export interface SubscriptionPatch {
   billingInterval?: BillingInterval;
   expectedAmount?: Money;
   category?: string;
-  note?: string;
+  note?: string | undefined;
 }
 
 export interface TransactionQuery {
@@ -185,6 +185,6 @@ export interface TransactionQuery {
 }
 
 export interface FindingQuery {
-  status?: FindingStatus | "open";
+  status?: FindingStatus | "open" | undefined;
   type?: FindingType;
 }

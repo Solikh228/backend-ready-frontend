@@ -21,7 +21,7 @@ function minorDigits(currency: string) {
 export function toMinor(major: string, currency: string): number {
   const d = minorDigits(currency);
   const [i, f = ""] = major.trim().replace(/,/g, "").split(".");
-  return Number(i || "0") * 10 ** d + Number((f + "0".repeat(d)).slice(0, d) || "0") * (i.startsWith("-") ? -1 : 1);
+  return Number(i || "0") * 10 ** d + Number((f + "0".repeat(d)).slice(0, d) || "0") * ((i ?? "").startsWith("-") ? -1 : 1);
 }
 
 export function formatMoney(m: Money | null | undefined, opts: { abs?: boolean } = {}): string {
